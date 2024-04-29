@@ -7,6 +7,16 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+// middleware that appends the headers on every response, to avoid issue with CORS
+// https://stackoverflow.com/questions/23751914/how-can-i-set-response-header-on-express-js-assets
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*'])
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    res.append('Access-Control-Allow-Headers', 'Content-Type')
+    next()
+})
+
 app.use(routes)
 
 db.once('open', () => {
