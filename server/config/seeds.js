@@ -7,7 +7,7 @@ db.once('open', async () => {
 
     await Employee.create({
         email: 'test@test.com',
-        password: 'password#123'
+        password: 'password#1234'
     })
 
     console.log('employee seeded')
