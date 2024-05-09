@@ -1,4 +1,4 @@
-import decode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 
 class AuthService {
     getToken() {
@@ -16,7 +16,7 @@ class AuthService {
     }
 
     getProfile() {
-        return decode(this.getToken())
+        return jwtDecode(this.getToken())
     }
 
     logout() {

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Auth from '../utils/auth'
 
 function Login() {
 
@@ -11,14 +12,15 @@ function Login() {
     
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        console.log('submit code is running')
+
         const response = await fetch('http://localhost:3001/api/login', {
             method: 'POST',
             body: JSON.stringify({ email, password }),
             headers: { 'Content-Type': 'application/json' }
         })
         const data = await response.json()
-        console.log(data)
+        
+        Auth.login(data.token)
     }
 
     return (
