@@ -7,10 +7,10 @@ import Auth from '../utils/auth'
 
 const currentPage = window.location.pathname
 const navigation = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'My Request', href: '/my-request', current: false },
-    { name: 'Request Time Off', href: '/request-time-off', current: false },
-    { name: Auth.loggedIn() ? 'Logout' : 'Login', href: '/login', current: false },
+    { name: 'Home', href: '/', requireLogin: false},
+    { name: 'My Request', href: '/my-request', requireLogin: true},
+    { name: 'Request Time Off', href: '/request-time-off', requireLogin: true},
+    { name: Auth.loggedIn() ? 'Logout' : 'Login', href: '/login', requireLogin: false},
     ]
 
 function classNames(...classes) {
@@ -46,7 +46,7 @@ export default function Header() {
                     </div>
                     <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                        {navigation.map((item) => (
+                        {navigation.map((item) => !item.requireLogin || Auth.loggedIn() ? (
                         <a
                             key={item.name}
                             href={item.href}
@@ -54,11 +54,11 @@ export default function Header() {
                             currentPage === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                             'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={item.current ? 'page' : undefined}
+                            aria-current={currentPage === item.href ? 'page' : undefined}
                         >
                             {item.name}
                         </a>
-                        ))}
+                        ) : '')}
                     </div>
                     </div>
                 </div>
