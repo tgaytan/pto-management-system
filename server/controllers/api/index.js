@@ -5,8 +5,8 @@ const { signToken } = require('../../utils/auth')
 router.post('/login', async (req, res) => {
     try {
         const employee = await Employee.findOne({ email: req.body.email })
-        const correctPw = await employee.isCorrectPassword(req.body.password)
         const { _id, firstName, lastName, email, remainingPTO } = employee
+        const correctPw = await employee.isCorrectPassword(req.body.password)
 
         let token
         if (correctPw) {

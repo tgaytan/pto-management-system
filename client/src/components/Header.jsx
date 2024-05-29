@@ -4,6 +4,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import Auth from '../utils/auth'
 
+
+const currentPage = window.location.pathname
 const navigation = [
     { name: 'Home', href: '/', current: true },
     { name: 'My Request', href: '/my-request', current: false },
@@ -49,7 +51,7 @@ export default function Header() {
                             key={item.name}
                             href={item.href}
                             className={classNames(
-                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            currentPage === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                             'rounded-md px-3 py-2 text-sm font-medium'
                             )}
                             aria-current={item.current ? 'page' : undefined}
