@@ -6,10 +6,11 @@ router.post('/login', async (req, res) => {
     try {
         const employee = await Employee.findOne({ email: req.body.email })
         const correctPw = await employee.isCorrectPassword(req.body.password)
+        const { _id, firstName, lastName, email, remainingPTO } = employee
 
         let token
         if (correctPw) {
-            token = signToken(req.body.email)
+            token = signToken({ _id, firstName, lastName, email, remainingPTO })
         }
 
         res.status(200).json({ token })

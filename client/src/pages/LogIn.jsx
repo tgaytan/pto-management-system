@@ -28,8 +28,6 @@ function Login() {
 
     }
 
-    console.log(Auth.loggedIn())
-
     return (
         <>
             {/*
