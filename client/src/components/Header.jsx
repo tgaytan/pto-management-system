@@ -2,11 +2,13 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+import Auth from '../utils/auth'
+
 const navigation = [
     { name: 'Home', href: '/', current: true },
     { name: 'My Request', href: '/my-request', current: false },
     { name: 'Request Time Off', href: '/request-time-off', current: false },
-    { name: 'Log In', href: '/login', current: false },
+    { name: Auth.loggedIn() ? 'Logout' : 'Login', href: '/login', current: false },
     ]
 
 function classNames(...classes) {

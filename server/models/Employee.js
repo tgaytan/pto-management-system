@@ -2,6 +2,20 @@ const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const employeeSchema = new Schema({
+    firstName: {
+        type: String,
+        required: true,
+        minlength: 2,
+        maxlength: 20,
+        time: true
+    },
+    lastName: {
+        type: String,
+        required: true,
+        minlength: 2,
+        maxlength: 20,
+        time: true
+    },
     email: {
         type: String,
         required: true,
@@ -13,6 +27,10 @@ const employeeSchema = new Schema({
         minlength: 8,
         maxlength: 20,
         trim: true
+    },
+    remainingPTO: {
+        type: Number,
+        default: 200
     }
 })
 

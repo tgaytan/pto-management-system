@@ -1,3 +1,4 @@
 const Employee = require('./Employee')
+const DaysOff = require('./DaysOff')
 
-module.exports = { Employee }
+module.exports = { Employee, DaysOff }
