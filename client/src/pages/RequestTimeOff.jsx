@@ -1,11 +1,15 @@
 import Auth from '../utils/auth'
+import Calendar from 'react-calendar'
 
 function RequestTimeOff() {
+
+    const { firstName, lastName, remainingPTO } = Auth.getProfile().data
+
     return (
         <div>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="employee" className="block text-sm font-medium leading-6 text-gray-900">
                         Name
                     </label>
                     <div className="relative mt-2 rounded-md shadow-sm">
@@ -14,16 +18,16 @@ function RequestTimeOff() {
                         </div>
                         <input
                         type="text"
-                        name="price"
-                        id="price"
+                        name="employee-name"
+                        id="employee"
                         className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="0.00"
+                        value={`${firstName} ${lastName}`}
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center">
-                        {/* <label htmlFor="currency" className="sr-only">
+                        {/* <div className="absolute inset-y-0 right-0 flex items-center">
+                        <label htmlFor="currency" className="sr-only">
                             Currency
-                        </label> */}
-                        {/* <select
+                        </label>
+                        <select
                             id="currency"
                             name="currency"
                             className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
@@ -31,8 +35,26 @@ function RequestTimeOff() {
                             <option>USD</option>
                             <option>CAD</option>
                             <option>EUR</option>
-                        </select> */}
+                        </select>
+                        </div> */}
+                    </div>
+                    <label htmlFor="remainingPTO" className="block text-sm font-medium leading-6 text-gray-900">
+                        Remaining Hours in PTO
+                    </label>
+                    <div className="relative mt-2 rounded-md shadow-sm">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        {/* <span className="text-gray-500 sm:text-sm">$</span> */}
                         </div>
+                        <input
+                        type="text"
+                        name="remaining-PTO"
+                        id="remainingPTO"
+                        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={remainingPTO}
+                        />
+                    </div>
+                    <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                        <Calendar />
                     </div>
                 </div>
             </div>
