@@ -25,6 +25,14 @@ const callsToAction = [
 ]
 
 function Home() {
+
+    // defining current year to use for maxDate prop in Calendar component
+    const currentYear = new Date().getFullYear()
+
+    const onClickDay = (value, event) => {
+        console.log('clicked day: ', value)
+    } 
+
     return (
         <>
             {/* <Popover className="relative">
@@ -44,7 +52,7 @@ function Home() {
             > */}
                 {/* <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4"> */}
                 <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                    <Calendar />
+                    <Calendar maxDate={new Date(`12-31-${currentYear}`)} onClickDay={onClickDay}/>
                     {/* <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                         <div className="p-4">
                         {solutions.map((item) => (
