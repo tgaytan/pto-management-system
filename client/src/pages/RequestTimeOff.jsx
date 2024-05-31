@@ -3,8 +3,10 @@ import Calendar from 'react-calendar'
 
 function RequestTimeOff() {
 
-    // defining current year to use for maxDate prop in Calendar component
+    // defining maxDate and nextDay to be used for max/min date in Calendar component
     const currentYear = new Date().getFullYear()
+    const maxDate = new Date(`12-31-${currentYear}`)
+    const nextDay = new Date(Date.now() + (60 * 60 * 24 * 1000)) // adding an extra day in milliseconds
 
     const onClickDay = async (value, event) => {
         console.log('clicked day: ', value)
@@ -66,7 +68,7 @@ function RequestTimeOff() {
                         />
                     </div>
                     <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                        <Calendar maxDate={new Date(`12-31-${currentYear}`)} onClickDay={onClickDay} />
+                        <Calendar maxDate={maxDate} minDate={nextDay} onClickDay={onClickDay} />
                     </div>
                 </div>
             </div>
