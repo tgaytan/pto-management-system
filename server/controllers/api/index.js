@@ -23,7 +23,11 @@ router.get('/getDaysOff/:date', async (req, res) => {
     try {
         console.log('/getDaysOff endpoint hit')
         console.log('params are: ', req.params)
-        res.status(200).json({ message: 'endpoint hit' })
+
+        const daysOff = await DaysOff.find({ dayOff: req.params.date}).populate('employeeId')
+        console.log('days off', daysOff)
+
+        res.status(200).json({ daysOff })
     } catch(err) {
         res.status(500).json({ message: 'Request for Days Off failed' })
     }

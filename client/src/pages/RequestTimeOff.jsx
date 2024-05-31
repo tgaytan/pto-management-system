@@ -9,8 +9,7 @@ function RequestTimeOff() {
     const nextDay = new Date(Date.now() + (60 * 60 * 24 * 1000)) // adding an extra day in milliseconds
 
     const onClickDay = async (value, event) => {
-        console.log('clicked day: ', value)
-        const numFormat = value.toLocaleDateString('en-US').replace(/\//g, '') // this converts the selected date to 3/14/2024 and then removes the slashes and ends with 3142024
+        const numFormat = value.toLocaleDateString('en-US').replace(/\//g, '-') // this converts the selected date to 3/14/2024 and then removes the slashes and ends with 3-14-2024
 
         const response = await fetch(`http://localhost:3001/api/getDaysOff/${numFormat}`)
         const data = await response.json()

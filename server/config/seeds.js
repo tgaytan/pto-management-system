@@ -4,7 +4,7 @@ const cleanDB = require('./cleanDB')
 
 db.once('open', async () => {
     await cleanDB('Employee', 'employees')
-    await cleanDB('DaysOff', 'Daysoff')
+    await cleanDB('DaysOff', 'daysOff')
 
     await Employee.create({
         firstName: 'Trinidad',
@@ -14,6 +14,16 @@ db.once('open', async () => {
     })
 
     console.log('employee seeded')
+
+    const employee = await Employee.findOne({ email: 'test@test.com' })
+
+    await DaysOff.create({
+        employeeId: employee._id,
+        dayOff: '10-11-24',
+        hours: 8
+    })
+
+    console.log('day off seeded')
 
     process.exit()
 })
