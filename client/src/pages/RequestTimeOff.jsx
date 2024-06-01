@@ -1,19 +1,27 @@
+import { useState } from 'react'
 import Auth from '../utils/auth'
 import Calendar from 'react-calendar'
 
 function RequestTimeOff() {
+
+    const [peopleOff, setPeopleOff] = useState([])
+    const [dayClicked, setDayClicked] = useState(false)
 
     // defining maxDate and nextDay to be used for max/min date in Calendar component
     const currentYear = new Date().getFullYear()
     const maxDate = new Date(`12-31-${currentYear}`)
     const nextDay = new Date(Date.now() + (60 * 60 * 24 * 1000)) // adding an extra day in milliseconds
 
+    // function that runs when a day in the calendar is clicked. it send a request to the backend to retrieve who is planned to be out that day
     const onClickDay = async (value, event) => {
         const numFormat = value.toLocaleDateString('en-US').replace(/\//g, '-') // this converts the selected date to 3/14/2024 and then removes the slashes and ends with 3-14-2024
 
         const response = await fetch(`http://localhost:3001/api/getDaysOff/${numFormat}`)
         const data = await response.json()
-        console.log(data.daysOff.length)
+        setDayClicked(true)
+        setPeopleOff(data.daysOff)
+        console.log(data.daysOff)
+        console.log(peopleOff)
     }
 
     const people = [
@@ -125,18 +133,24 @@ function RequestTimeOff() {
                         <Calendar maxDate={maxDate} minDate={nextDay} onClickDay={onClickDay} />
                     </div>
                     <div className="relative mt-2 rounded-md shadow-sm">
-                        <ul role="list" className=" divide-gray-100">
-                            {people.map((person) => (
-                                <li key={person.email} className="flex justify-between gap-x-6 py-2">
+                        {dayClicked === false 
+                            ? '' 
+                            : (<h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                                There are {5 - peopleOff.length} available spots for the selected day
+                                </h2>)
+                        }
+                        <ul role="list" className="divide-gray-100">
+                            {peopleOff.map((person) => (
+                                <li key={person.emloyeeId.email} className="flex justify-between gap-x-6 py-2">
                                 <div className="flex min-w-0 gap-x-4">
                                     {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={person.imageUrl} alt="" /> */}
                                     <div className="min-w-0 flex-auto">
-                                        <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                                        <p className="text-sm font-semibold leading-6 text-gray-900">{person.employeeId.firstName + person.employeeId.lastName }</p>
                                         {/* <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.email}</p> */}
                                     </div>
                                 </div>
                                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                                    <p className="text-sm leading-6 text-gray-900">{person.role}</p>
+                                    <p className="text-sm leading-6 text-gray-900">{person.dayOff}</p>
                                     {/* {person.lastSeen ? (
                                     <p className="mt-1 text-xs leading-5 text-gray-500">
                                         Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
