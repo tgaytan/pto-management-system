@@ -21,21 +21,23 @@ router.post('/login', async (req, res) => {
 
 router.get('/getDaysOff/:date', async (req, res) => {
     try {
-        console.log('/getDaysOff endpoint hit')
-        console.log('params are: ', req.params)
-
         const daysOff = await DaysOff.find({ dayOff: req.params.date}).populate('employeeId')
-        console.log('days off', daysOff)
-
         res.status(200).json({ daysOff })
     } catch(err) {
         res.status(500).json({ message: 'Request for Days Off failed' })
     }
 })
 
-router.put('/addDayOff', async (req, res) => {
+router.post('/addDayOff', async (req, res) => {
     try {
-        console.log('/addDayOff endpoint hit')
+
+        await DaysOff.create({
+            employeeId: req.body.employeeId,
+            dayOff: req.body.dayOff,
+            hours: req.body.hours
+        })
+
+        res.status(200).json({ message: 'Request for Day Off Approved' })
     } catch(err) {
         console.log(err)
         res.status(500).json({ message: 'PTO Request Failed' })
