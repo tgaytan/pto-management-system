@@ -16,7 +16,21 @@ class AuthService {
     }
 
     getProfile() {
-        return jwtDecode(this.getToken())
+        const token = this.getToken()
+
+        if (token) {
+            const profile = jwtDecode(token)
+            const expired = (profile.exp - profile.iat) > (8 * 60 * 60) ? true : false //checking if the difference between expired time and issue-at time is mroe than 8 hours. the units of these times are seconds
+
+            if (expired) {
+                window.location.assign('/login')
+                return
+            }
+
+            return profile
+        }
+
+        return;
     }
 
     logout() {
