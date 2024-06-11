@@ -20,9 +20,16 @@ class AuthService {
 
         if (token) {
             const profile = jwtDecode(token)
-            const expired = (profile.exp - profile.iat) > (8 * 60 * 60) ? true : false //checking if the difference between expired time and issue-at time is mroe than 8 hours. the units of these times are seconds
+            const expired = ((Date.now() / 1000) - profile.exp) > (8 * 60 * 60) ? true : false //checking if the difference between expired time and issue-at time is mroe than 8 hours. the units of these times are seconds
+            console.log(expired)
+            console.log(profile.exp)
+            console.log(profile.iat)
+            console.log(profile.exp - profile.iat)
+            console.log(8 * 60 * 60)
+            console.log(Date.now() / 1000)
 
             if (expired) {
+                this.logout()
                 window.location.assign('/login')
                 return
             }

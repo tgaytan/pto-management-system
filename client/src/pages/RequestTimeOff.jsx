@@ -8,6 +8,8 @@ function RequestTimeOff() {
     const [isDayClicked, setIsDayClicked] = useState(false)
     const dateRef = useRef('')
 
+    const { _id, firstName, lastName, remainingPTO } = Auth.getProfile().data
+
     const apiEndpoint = 'http://localhost:3001/api'
 
     // defining maxDate and nextDay to be used for max/min date in Calendar component
@@ -96,8 +98,6 @@ function RequestTimeOff() {
     //         lastSeen: null,
     //     },
     // ]
-
-    const { _id, firstName, lastName, remainingPTO } = Auth.getProfile().data
 
     return (
         <div>

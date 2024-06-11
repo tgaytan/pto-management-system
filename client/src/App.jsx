@@ -6,7 +6,7 @@ import Auth from './utils/auth'
 function App() {
 
   useEffect(() => {
-    Auth.getProfile()
+    Auth.getProfile() // running on first load to see if token is expired
   }, [])
 
 

@@ -30,7 +30,6 @@ router.get('/getDaysOff/:date', async (req, res) => {
 
 router.post('/addDayOff', async (req, res) => {
     try {
-
         await DaysOff.create({
             employeeId: req.body.employeeId,
             dayOff: req.body.dayOff,
