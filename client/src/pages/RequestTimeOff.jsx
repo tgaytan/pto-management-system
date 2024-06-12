@@ -45,6 +45,7 @@ function RequestTimeOff() {
 
         const data = await response.json()
         Auth.login(data.token) // updating token since the remainingPTO in the jwt payload has changed
+        window.location.assign('/request-time-off-success')
     }
 
     // const people = [
