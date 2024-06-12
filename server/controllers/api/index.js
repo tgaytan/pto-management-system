@@ -30,13 +30,29 @@ router.get('/getDaysOff/:date', async (req, res) => {
 
 router.post('/addDayOff', async (req, res) => {
     try {
-        await DaysOff.create({
-            employeeId: req.body.employeeId,
-            dayOff: req.body.dayOff,
-            hours: req.body.hours
-        })
+        // getting amount of PTO left over
+        const { remainingPTO } = await Employee.findOne({ _id: req.body.employeeId })
+        let employee // defining this variable so I can assign the new updated employee document to it. then use it to sign a new jwt token
 
-        res.status(200).json({ message: 'Request for Day Off Approved' })
+        // checks if the user has enough PTO hours to request a day off. if they do, it subtracts it from their current hours and add the day off
+        if (remainingPTO < req.body.hours) {
+            res.status(403).json({ message: 'Not enough hours remaining' })
+        } else {
+            employee = await Employee.findOneAndUpdate(
+                { _id: req.body.employeeId }, 
+                { remainingPTO: remainingPTO - req.body.hours }, 
+                { returnDocument: 'after' }
+            )
+            await DaysOff.create({
+                employeeId: req.body.employeeId,
+                dayOff: req.body.dayOff,
+                hours: req.body.hours
+            })
+        }
+
+        const token = signToken(employee)
+
+        res.status(200).json({ message: 'Request for Day Off Approved', token })
     } catch(err) {
         console.log(err)
         res.status(500).json({ message: 'PTO Request Failed' })

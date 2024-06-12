@@ -24,6 +24,7 @@ function Login() {
             const data = await response.json()
             
             Auth.login(data.token)
+            window.location.assign('/')
         }
 
     }

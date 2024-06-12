@@ -42,6 +42,9 @@ function RequestTimeOff() {
                 hours: 8
             })
         })
+
+        const data = await response.json()
+        Auth.login(data.token) // updating token since the remainingPTO in the jwt payload has changed
     }
 
     // const people = [
