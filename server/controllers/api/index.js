@@ -28,6 +28,15 @@ router.get('/getDaysOff/:date', async (req, res) => {
     }
 })
 
+router.get('/getAllDaysOff/:employeeId', async (req, res) => {
+    try {
+        const daysOff = await DaysOff.find({ employeeId: req.params.employeeId })
+        res.status(200).json({ daysOff })
+    } catch(err) {
+        res.status(500).json({ message: 'Request for Days off failed' })
+    }
+})
+
 router.post('/addDayOff', async (req, res) => {
     try {
         // getting amount of PTO left over
