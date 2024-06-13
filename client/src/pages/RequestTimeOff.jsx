@@ -39,7 +39,8 @@ function RequestTimeOff() {
             body: JSON.stringify({
                 employeeId: _id,
                 dayOff: dateRef.current,
-                hours: 8
+                hours: 8,
+                token: Auth.getToken()
             })
         })
 

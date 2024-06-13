@@ -45,7 +45,7 @@ router.post('/addDayOff', async (req, res) => {
 
         // checks if the user has enough PTO hours to request a day off. if they do, it subtracts it from their current hours and add the day off
         if (remainingPTO < req.body.hours) {
-            res.status(403).json({ message: 'Not enough hours remaining' })
+            res.status(403).json({ message: 'Not enough hours remaining', token: req.body.token })
         } else {
             employee = await Employee.findOneAndUpdate(
                 { _id: req.body.employeeId }, 
