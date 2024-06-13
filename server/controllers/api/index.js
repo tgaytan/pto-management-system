@@ -28,6 +28,15 @@ router.get('/getDaysOff/:date', async (req, res) => {
     }
 })
 
+router.get('/getAllDaysOff', async (req, res) => {
+    try {
+        const daysOff = await DaysOff.find({}).populate('employeeId')
+        res.status(200).json({ daysOff })
+    } catch(err) {
+        res.status(500).json({ message: 'request failed' })
+    }
+})
+
 router.get('/getAllDaysOff/:employeeId', async (req, res) => {
     try {
         const daysOff = await DaysOff.find({ employeeId: req.params.employeeId })

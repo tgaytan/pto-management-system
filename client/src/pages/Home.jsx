@@ -34,6 +34,13 @@ function Home() {
     const [peopleOff, setPeopleOff] = useState([])
     const dateRef = useRef('')
 
+    const onClickGetAll = async(e) => {
+        e.preventDefault()
+        const response = await fetch(`${apiEndpoint}/getAllDaysOff`)
+        const data = await response.json()
+        setPeopleOff(data.daysOff)
+    }
+
     const onClickDay = async (value, event) => {
         const numFormat = value.toLocaleDateString('en-US').replace(/\//g, '-') // this converts the selected date to 3/14/2024 and then removes the slashes and ends with 3-14-2024
 
@@ -96,6 +103,15 @@ function Home() {
                         ))}
                         </div>
                     </div> */}
+                        <div className="relative mt-2 rounded-md shadow-sm">
+                            <button
+                                type="submit"
+                                onClick={onClickGetAll}
+                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            >
+                                Show All Days
+                            </button>
+                        </div> 
                         <div className="relative mt-2 rounded-md shadow-sm">
                             <ul role="list" className="divide-gray-100">
                                 {peopleOff.map((person) => (
