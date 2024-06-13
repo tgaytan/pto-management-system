@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css' // styling changes for calendar will be made in this file
 
@@ -28,9 +29,18 @@ function Home() {
 
     // defining current year to use for maxDate prop in Calendar component
     const currentYear = new Date().getFullYear()
+    const apiEndpoint = 'http://localhost:3001/api'
 
-    const onClickDay = (value, event) => {
-        console.log('clicked day: ', value)
+    const [peopleOff, setPeopleOff] = useState([])
+    const dateRef = useRef('')
+
+    const onClickDay = async (value, event) => {
+        const numFormat = value.toLocaleDateString('en-US').replace(/\//g, '-') // this converts the selected date to 3/14/2024 and then removes the slashes and ends with 3-14-2024
+
+        dateRef.current = numFormat
+        const response = await fetch(`${apiEndpoint}/getDaysOff/${numFormat}`)
+        const data = await response.json()
+        setPeopleOff(data.daysOff)
     } 
 
     return (
@@ -51,8 +61,11 @@ function Home() {
                 leaveTo="opacity-0 translate-y-1"
             > */}
                 {/* <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4"> */}
-                <div className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                    <Calendar maxDate={new Date(`12-31-${currentYear}`)} onClickDay={onClickDay}/>
+                <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                        <div className="relative mt-2 rounded-md shadow-sm">
+                            <Calendar maxDate={new Date(`12-31-${currentYear}`)} onClickDay={onClickDay}/>
+                        </div>
                     {/* <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                         <div className="p-4">
                         {solutions.map((item) => (
@@ -83,6 +96,23 @@ function Home() {
                         ))}
                         </div>
                     </div> */}
+                        <div className="relative mt-2 rounded-md shadow-sm">
+                            <ul role="list" className="divide-gray-100">
+                                {peopleOff.map((person) => (
+                                    <li key={person.employeeId.email} className="flex justify-between gap-x-6 py-2">
+                                    <div className="flex min-w-0 gap-x-4">
+                                        <div className="min-w-0 flex-auto">
+                                            <p className="text-sm font-semibold leading-6 text-gray-900">{`${person.employeeId.firstName} ${person.employeeId.lastName}`}</p>
+                                        </div>
+                                    </div>
+                                    <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                                        <p className="text-sm leading-6 text-gray-900">{new Date(person.dayOff).toISOString().split('T')[0]}</p>
+                                    </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 {/* </Popover.Panel>
             </Transition>
