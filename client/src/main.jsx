@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import App from './App.jsx'
 import Home from './pages/Home'
-import Login from './pages/Login' // I had to rename this file to get weird error about casing to go away
+import Login from './pages/LogIn.jsx'
 import MyRequest from './pages/MyRequest'
 import RequestTimeOff from './pages/RequestTimeOff'
 import Success from './pages/Success'
