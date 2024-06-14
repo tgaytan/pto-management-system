@@ -7,7 +7,7 @@
     "client": "cd client && npm run dev",
     "server": "cd server && node server.js",
     "dev": "concurrently \"cd server && nodemon server.js\" \"cd client && npm run dev\"",
-    "seed": "cd server/config && node seeds.js",
+    "seed": "node server/config/seeds.js",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
     "render-build": "npm install && npm run build",
