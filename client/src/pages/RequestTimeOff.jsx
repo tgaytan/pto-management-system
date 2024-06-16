@@ -10,7 +10,7 @@ function RequestTimeOff() {
 
     const { _id, firstName, lastName, remainingPTO } = Auth.getProfile().data
 
-    const apiEndpoint = 'http://localhost:3001/api'
+    const apiEndpoint = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api'
 
     // defining maxDate and nextDay to be used for max/min date in Calendar component
     const currentYear = new Date().getFullYear()

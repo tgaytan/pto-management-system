@@ -3,7 +3,7 @@ import Auth from '../utils/auth'
 
 function MyRequest() {
     const employee = Auth.getProfile()
-    const apiEndpoint = 'http://localhost:3001/api'
+    const apiEndpoint = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api'
     const [daysOff, setDaysOff] = useState([])
 
     // async function that is used to get all the days that the user has requested off
