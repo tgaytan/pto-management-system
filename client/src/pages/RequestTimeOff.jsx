@@ -24,7 +24,6 @@ function RequestTimeOff() {
         dateRef.current = numFormat
         const response = await fetch(`${apiEndpoint}/getDaysOff/${numFormat}`)
         const data = await response.json()
-        console.log(data)
         setIsDayClicked(true)
         setPeopleOff(data.daysOff)
     }
