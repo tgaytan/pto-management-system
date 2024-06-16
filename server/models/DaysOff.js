@@ -11,7 +11,7 @@ const daysOffSchema = new Schema({
         ref: 'Employee'
     },
     dayOff: {
-        type: Date,
+        type: String,
         required: true
     },
     hours: {
