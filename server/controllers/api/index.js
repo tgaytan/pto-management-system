@@ -39,7 +39,7 @@ router.get('/getAllDaysOff', async (req, res) => {
 
 router.get('/getAllDaysOff/:employeeId', async (req, res) => {
     try {
-        const daysOff = await DaysOff.find({ employeeId: req.params.employeeId })
+        const daysOff = await DaysOff.find({ employeeId: req.params.employeeId }).sort({ dayOff: -1 })
         res.status(200).json({ daysOff })
     } catch(err) {
         res.status(500).json({ message: 'Request for Days off failed' })
