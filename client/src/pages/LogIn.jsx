@@ -6,6 +6,8 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const apiEndpoint = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api'
+
     const handleInputChange = e => {
         e.target.name === 'email' ? setEmail(e.target.value) : setPassword(e.target.value)
     }
@@ -16,7 +18,7 @@ function Login() {
         if (Auth.loggedIn()) {
             Auth.logout()
         } else {
-            const response = await fetch('http://localhost:3001/api/login', {
+            const response = await fetch(`${apiEndpoint}/login`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' }
