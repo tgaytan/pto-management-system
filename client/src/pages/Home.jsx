@@ -29,7 +29,7 @@ function Home() {
 
     // defining current year to use for maxDate prop in Calendar component
     const currentYear = new Date().getFullYear()
-    const apiEndpoint = 'http://localhost:3001/api'
+    const apiEndpoint = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api'
 
     const [peopleOff, setPeopleOff] = useState([])
     const dateRef = useRef('')
