@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/getDaysOff/:date', async (req, res) => {
     try {
-        const daysOff = await DaysOff.find({ dayOff: req.params.date}).populate('employeeId')
+        const daysOff = await DaysOff.find({ dayOff: req.params.date }).populate('employeeId')
         res.status(200).json({ daysOff })
     } catch(err) {
         res.status(500).json({ message: 'Request for Days Off failed' })
