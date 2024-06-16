@@ -9,13 +9,20 @@ db.once('open', async () => {
     await Employee.create({
         firstName: 'Trinidad',
         lastName: 'Gaytan',
-        email: 'test@test.com',
-        password: 'password#1234'
+        email: 'trinidad@test.com',
+        password: 'password'
     })
 
-    console.log('employee seeded')
+    await Employee.create({
+        firstName: 'Samantha',
+        lastName: 'Losoya',
+        email: 'samantha@test.com',
+        password: 'password'
+    })
 
-    const employee = await Employee.findOne({ email: 'test@test.com' })
+    console.log('employees seeded')
+
+    const employee = await Employee.findOne({ email: 'trinidad@test.com' })
 
     await DaysOff.create({
         employeeId: employee._id,
@@ -23,7 +30,15 @@ db.once('open', async () => {
         hours: 8
     })
 
-    console.log('day off seeded')
+    const employeeTwo = await Employee.findOne({ email: 'samantha@test.com' })
+
+    await DaysOff.create({
+        employeeId: employeeTwo._id,
+        dayOff: '8-10-2024',
+        hours: 8
+    })
+
+    console.log('days off seeded')
 
     process.exit()
 })
