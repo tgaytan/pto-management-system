@@ -5,6 +5,7 @@ function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loginFailed, setLoginFailed] = useState(false) 
 
     const apiEndpoint = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api'
 
@@ -25,8 +26,12 @@ function Login() {
             })
             const data = await response.json()
             
-            Auth.login(data.token)
-            window.location.assign('/')
+            if (data.token) {
+                Auth.login(data.token)
+                window.location.assign('/')
+            } else {
+                setLoginFailed(true)
+            }
         }
 
     }
@@ -47,6 +52,9 @@ function Login() {
                 /> */}
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         {Auth.loggedIn() ? '' : 'Sign in to your account'}
+                    </h2>
+                    <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
+                        {loginFailed ? 'Login failed' : ''}
                     </h2>
                 </div>
 
