@@ -30,7 +30,7 @@ router.get('/getDaysOff/:date', async (req, res) => {
 
 router.get('/getAllDaysOff', async (req, res) => {
     try {
-        const daysOff = await DaysOff.find({}).populate('employeeId')
+        const daysOff = await DaysOff.find({}).populate('employeeId').sort({ dayOff: -1 })
         res.status(200).json({ daysOff })
     } catch(err) {
         res.status(500).json({ message: 'request failed' })

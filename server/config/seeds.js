@@ -19,7 +19,7 @@ db.once('open', async () => {
 
     await DaysOff.create({
         employeeId: employee._id,
-        dayOff: '10-11-24',
+        dayOff: '10-11-2024',
         hours: 8
     })
 
