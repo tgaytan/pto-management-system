@@ -8,6 +8,10 @@ This is a MERN stack application.  The data for employees and requested days off
 
 A deployed version of this application can be found at https://pto-management-system.onrender.com
 
+To test the site, the following credentials can be used
+email: trinidad@test.com
+password: password
+
 ## Installation
 
 1.  Before installation, verify that the following is installed
